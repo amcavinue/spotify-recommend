@@ -42,15 +42,18 @@ img {
 .button-primary {
     background-color: #3476FF;
 }
-h1 {
+
+h2 {
+    margin: 0 0 5px 0;
+}
+
+h3 {
     padding: 20px;
     background-color: #CDDDFF;
     margin: 0 0 20px 0;
     text-align: center;
 }
-h2 {
-    margin: 0 0 5px 0;
-}
+
 div#result {
     transition: opacity 1s;
 }
@@ -58,7 +61,7 @@ div#result.transparent{
     opacity : 0;
 }
 div.main {
-    padding: 60px;
+    /*padding: 60px;*/
 }
 div.main img {
     float: left;
@@ -94,7 +97,7 @@ var Spotify = function() {
 Spotify.prototype.onSearchClicked = function() {
     var name = this.searchBox.val();
     this.search(name);
-    this.result.toggleClass('transparent');
+    this.result.addClass('transparent');
 };
 Spotify.prototype.onSearchSubmitted = function(event) {
     event.preventDefault();
@@ -107,11 +110,21 @@ Spotify.prototype.search = function(name) {
     });
     ajax.done(this.onSearchDone.bind(this));
 };
-Spotify.prototype.onSearchDone = function(artist) {
+Spotify.prototype.onSearchDone = function(artists) {
+    this.result.empty();
+    for (var i = 0; i < artists.length; i++) {
+        var nextArtist = $(this.artistTemplate(artists[i]));
+        this.result.append(nextArtist);
+    }
+    this.result.removeClass('transparent');
+};
+
+/*Spotify.prototype.onSearchDone = function(artist) {
     var result = $(this.artistTemplate(artist));
     this.result.empty().append(result);
     this.result.toggleClass('transparent');
-};
+};*/
+
 $(document).ready(function() {
     var app = new Spotify();
 });
@@ -125,17 +138,16 @@ $(document).ready(function() {
         <div id="result">
         </div>
 
-
         <script id="artist-template" type="text/x-handlebars-template">
             <div>
-                <h1>
+                <h3>
                     {{#each images}}
                     {{#if @last }}
                     <img src="{{ url }}">
                     {{/if}}
                     {{/each}}
                     <a href="{{uri}}">{{ name }}</a>
-                </h1>
+                </h3>
                 <div class="pure-g main">
                     {{#each related}}
                     <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-2">

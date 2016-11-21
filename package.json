@@ -17,6 +17,12 @@
   },
   "homepage": "https://github.com/amcavinue/spotify-recommend#readme",
   "dependencies": {
+    "asyncawait": "^1.0.6",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-transform-regenerator": "^6.16.1",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-runtime": "^6.18.0",
     "express": "^4.14.0",
     "unirest": "^0.5.1"
   }
